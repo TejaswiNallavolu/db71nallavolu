@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Tejaswi Nallavolu  #{title}
+  button(type='button' class='btn btn-secondary' onclick="update()") Press Me
+  div(id="target" class="container" style="color:red; background-color:green ;") Display
+  script. 
+      var client_count=0 
+      function update(){
+        client_count++;
+        document.getElementById("target").innerHTML=`Value now ${client_count}`
+      } 
+  

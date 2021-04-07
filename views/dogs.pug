@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  - 
+    const dogs=[{dogname:"shihtzu",place:"indoors",family:"Carnivores",price:2000},{dogname:"Beagles",place:"Houses",family:"Hound Group",price:500},{dogname:"Labrador",place:"apartment",family:"Sporting Group",price:800},]
+  div(class="container-fluid")
+  div(class="row")
+    each dog,index in dogs
+        div(class="col-sm-4" onclick=`buy(${index})`) #{dog.dogname} - #{dog.place} - #{dog.family} - #{dog.price}
+  script.
+    function buy(itemNo)
+     {
+        alert(`You purchased Item ${itemNo+1}`)
+     }
