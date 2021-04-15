@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1(id="Dog title")= title
+
+  - let dogid = toShow._id
+  - let dogname = toShow.dogname
+  - let place= toShow.place
+  - let price = toShow.price
+  - let family = toShow.family
+  div
+    div.row
+      div(class='costumeAttr mr-3') dog ID is:
+      div(class='lists unique') #{dogid}
+    div.row
+      div(class='costumeAttr mr-3') dog name is:
+      div(class="lists") #{dogname}
+    div.row
+      div(class='costumeAttr mr-3') dog place is:
+      div(class="lists") #{place}
+    div.row
+      div(class='costumeAttr mr-3') dog price is:
+      div(class="lists") #{price}
+    div.row
+      div(class='costumeAttr mr-3') dog family is:
+      div(class="lists") #{family}

@@ -6,3 +6,39 @@ body {
 a {
   color: #00B7FF;
 }
+.costumeAttr {
+  background-color: rgb(25, 247, 25);
+  width: 200px;
+  margin: 5px;
+  text-align: center;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+#Dog title{
+  color: #521344;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: underline;
+}
+
+.lists{
+  margin-right: 2px;
+  margin-bottom: 0;
+  padding: 10px;
+  justify-content:center;
+  font-weight: bold;
+  border-bottom: 2px solid red;
+  border-left: 2px solid red;
+  background-color: azure;
+  border-radius: 1px;
+}
+.lists{
+    border-top: 2px solid rgb(85, 183, 240);
+    width: 40%;
+}
+.values:hover{
+  background-color: rgb(142, 13, 146);
+  color: black;
+}

@@ -11,9 +11,16 @@ exports.dog_list = async function (req, res) {
     }
     // res.send('NOT IMPLEMENTED: dog list');
 };
-// for a specific dog.
-exports.dog_detail = function (req, res) {
-    res.send('NOT IMPLEMENTED: dog detail: ' + req.params.id);
+//for a specific Costume.
+exports.dog_detail = async function (req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        result = await Dogs.findById(req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
 // Handle dog create on POST.
 exports.dog_create_post = async function (req, res) {
@@ -36,14 +43,40 @@ exports.dog_create_post = async function (req, res) {
         res.status(500);
     }
 };
-// Handle dog delete form on DELETE.
-exports.dog_delete = function (req, res) {
-    res.send('NOT IMPLEMENTED: dog delete DELETE ' + req.params.id);
+
+// Handle DOG delete on DELETE.
+exports.dog_delete = async function(req, res) {
+    console.log("delete "  + req.params.id)
+    try {
+        result = await Dogs.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
-// Handle dog update form on PUT.
-exports.dog_update_put = function (req, res) {
-    res.send('NOT IMPLEMENTED: dog update PUT' + req.params.id);
+
+// Handle Costume update form on PUT.
+exports.dog_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Dogs.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.dogname) toUpdate.dogname = req.body.dogname;
+        if(req.body.place) toUpdate.place = req.body.place;
+        if(req.body.family) toUpdate.family = req.body.family;
+        if(req.body.price) toUpdate.price = req.body.price;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
+
+
 
 // VIEWS
 // Handle a show all view
@@ -51,7 +84,7 @@ exports.dog_view_all_Page = async function (req, res) {
     try {
         console.log("njfndw")
         thedogs = await Dogs.find();
-        
+
         res.render('dogs', { title: 'dog Search Results', results: thedogs });
     }
     catch (err) {
@@ -59,4 +92,61 @@ exports.dog_view_all_Page = async function (req, res) {
         res.status(500);
     }
 };
+// Handle a show one view with id specified by query
+exports.dog_view_one_Page = async function(req, res) {
+    console.log("single view for id "  + req.query.id)
+    try{
+        result = await Dogs.findById( req.query.id)
+        res.render('dogdetail', 
+{ title: 'Dog Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+// Handle building the view for creating a dog.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.dog_create_Page =  function(req, res) {
+    console.log("create view")
+    try{
+        res.render('dogcreate', { title: 'dog Create'});
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for updating a dog.
+// query provides the id
+exports.dog_update_Page =  async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+        let result = await Dogs.findById(req.query.id)
+        res.render('Dogupdate', { title: 'Dog Update', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+// Handle a delete one view with id from query
+exports.dog_delete_Page = async function(req, res) {
+    console.log("Delete view for id "  + req.query.id)
+    try{
+        result = await Dogs.findById(req.query.id)
+        res.render('dogdelete', { title: 'Dog Delete', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
 
