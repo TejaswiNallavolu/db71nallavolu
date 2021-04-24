@@ -2,8 +2,10 @@ var Dogs = require('../models/dogs');
 // List of all dogs
 exports.dog_list = async function (req, res) {
     try {
+        console.log("sample");
         Mydogs = await Dogs.find();
-        res.send(Mydogs);
+        console.log("sample");
+        res.send(Mydogs);   
     }
     catch (err) {
         res.send(`{"error": ${err}}`)
@@ -39,7 +41,7 @@ exports.dog_create_post = async function (req, res) {
         res.send(result);
     }
     catch (err) {
-        res.send(`{"error": ${err}}`)
+        res.send(err)
         res.status(500);
     }
 };
@@ -82,8 +84,9 @@ exports.dog_update_put = async function(req, res) {
 // Handle a show all view
 exports.dog_view_all_Page = async function (req, res) {
     try {
-        console.log("njfndw")
+        console.log(req)
         thedogs = await Dogs.find();
+        console.log(thedogs)
 
         res.render('dogs', { title: 'dog Search Results', results: thedogs });
     }
@@ -127,7 +130,7 @@ exports.dog_update_Page =  async function(req, res) {
     console.log("update view for item "+req.query.id)
     try{
         let result = await Dogs.findById(req.query.id)
-        res.render('Dogupdate', { title: 'Dog Update', toShow: result });
+        res.render('dogupdate', { title: 'Dog Update', toShow: result });
     }
     catch(err){
         res.status(500)

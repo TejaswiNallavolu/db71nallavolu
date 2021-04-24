@@ -1,14 +1,11 @@
 extends layout
-
 block content
-  h1= title
-  p Tejaswi Nallavolu  #{title}
-  button(type='button' class='btn btn-secondary' onclick="update()") Press Me
-  div(id="target" class="container" style="color:red; background-color:green ;") Display
-  script. 
-      var client_count=0 
-      function update(){
-        client_count++;
-        document.getElementById("target").innerHTML=`Value now ${client_count}`
-      } 
-  
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/dogs") Take me to dogs
+    br
+    a(href="/logout") Logout

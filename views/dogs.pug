@@ -2,14 +2,24 @@ extends layout
 
 block content
   h1= title
-  - let dogs=results
+  - let dogs = results
   div(class="container-fluid mt-3")
   div(class="row")
-    each dog,index in dogs
-      div(class="col-sm-4 bg-info m-1 p-3" style=("font-weight:bolder")  onclick=`buy(${index})`) #{dog.dogname} - #{dog.place} - #{dog.family} - #{dog.price}
+      each dog,index in dogs
+        - let destination = `dispatch(\"/dogs/update?id=${dog._id}\")`
+        - let destinationcreate = `dispatchCreate(\"/dogs/create\")`
+        - let destinationdelete = `dispatchDelete(\"/dogs/delete?id=${dog._id}\")`
+        div(class="col-sm-4 bg-info m-1 p-3" style=("font-weight:bolder")  onclick=`buy(${index})`) #{dog.dogname} - #{dog.place} - #{dog.family} - #{dog.price}
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
+          button.btn( class="btn-primary " class="m-1" class="btn-toolbar", onclick= destinationcreate) Create
+          button.btn( class="btn-danger" class="m-1" class="btn-toolbar", onclick= destinationdelete) Delete
   script.
-     
-      function buy(itemNo)
-      {
-        alert(`You purchased Item ${itemNo+1}`)
+     function dispatch(path){
+     window.location.href=path
+     }
+     function dispatchDelete(path){
+      window.location.href=path
+      }    
+      function dispatchCreate(path){
+      window.location.href=path
       }
